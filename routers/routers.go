@@ -23,5 +23,21 @@ func GenerateRouter() *gin.Engine {
 }
 
 type UserService interface {
-	Save(users.User)
+	Save(users.User) users.User
+	FindAll() []users.User
+}
+
+type userService struct {
+	users []users.User
+}
+
+func New() UserService {
+	return &userService{}
+}
+
+func (s *userService) Save(user users.User) users.User {
+	s.users = append(s.users, user)
+}
+func (s *userService) FindAll() []users.User {
+	return s.users
 }
