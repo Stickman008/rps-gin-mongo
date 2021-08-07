@@ -1,0 +1,29 @@
+database rps-db
+
+collection user {
+
+    {
+        “_id”: "some_string_1",
+        “username”: "username1",
+        “password”: "password1",
+        “win”: [0, 0, 0],
+        “lastMatch”: {
+            "enemyName": "enemy1",
+            "player
+        },
+        "isChalenged": false,
+        "status": "idle"
+    }
+
+}
+
+collection ranking {
+    {
+        "username": "playerX",
+        "winRate": 34,
+    }
+}
+
+
+
+NOTE: status = ["idle", "in-match"]
