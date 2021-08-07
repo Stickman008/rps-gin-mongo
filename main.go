@@ -1,7 +1,10 @@
 package main
 
+import (
+	"rock-paper-scissor/routers"
+)
+
 func main() {
-	//อิอิ
-	//test
-	
+	server := routers.GenerateRouter()
+	server.Run(":8080")
 }
