@@ -1,5 +1,7 @@
 package users
 
-// func AddUserToDatabase(user *User) {
+import "github.com/gin-gonic/gin"
 
-// }
+func GetUserInfo(c *gin.Context) {
+
+}
