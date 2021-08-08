@@ -5,5 +5,5 @@ import (
 )
 
 func AddUserToDatabase(user *users.User) {
-
+	db := database
 }

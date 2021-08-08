@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"rock-paper-scissor/app/signup"
 	"rock-paper-scissor/app/tests"
 	"rock-paper-scissor/config"
 	"rock-paper-scissor/controller"
@@ -22,6 +23,8 @@ func GenerateRouter() *gin.Engine {
 	// router.Use(gin.Recovery(), middlewares.BasicAuth())
 
 	router.GET("/", tests.GetTest)
+
+	router.POST("/signup", signup.SignUpWithUsernameAndPassword)
 
 	router.GET("/users", func(ctx *gin.Context) {
 		ctx.JSON(200, usersController.FindAll())
