@@ -1,7 +1,6 @@
 database rockPaperScissor
 
 collection user {
-
     {
         “_id”: "some_string_1",
         “username”: "username1",
@@ -9,13 +8,17 @@ collection user {
         “win”: [0, 0, 0],
         “lastMatch”: {
             "enemyName": "enemy1",
-            "player
+            "player"
         },
-        "isChalenged": false,
+        "Challenger": ["name1", "name2"],
         "status": "idle"
     }
-
 }
+
+stuct match
+hearder: username1
+"challenge/username2"
+
 
 collection ranking {
     {
