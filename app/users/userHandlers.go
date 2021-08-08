@@ -1,5 +1,5 @@
 package users
 
-func AddUserToDatabase(user *User) {
+// func AddUserToDatabase(user *User) {
 
-}
+// }
