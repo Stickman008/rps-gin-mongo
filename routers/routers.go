@@ -1,15 +1,17 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	"rock-paper-scissor/app/tests"
+	"rock-paper-scissor/config"
+
+	"github.com/gin-gonic/gin"
+)
 
 func GenerateRouter() *gin.Engine {
-	router := gin.Default()
+	gin.SetMode(config.GinMode)
+	router := gin.New()
 
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "test",
-		})
-	})
+	router.GET("/", tests.GetTest)
 
 	return router
 }

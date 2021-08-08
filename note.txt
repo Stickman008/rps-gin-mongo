@@ -1,4 +1,4 @@
-database rps-db
+database rockPaperScissor
 
 collection user {
 
