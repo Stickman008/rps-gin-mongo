@@ -2,58 +2,42 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"time"
+
 	"rock-paper-scissor/config"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-type MongoClient interface {
-	Ping(ctx context.Context, rp *readpref.ReadPref) error
-	Database() *mongo.Database
-}
+const (
+	// Timeout operations after N seconds
+	connectTimeout           = 5
+	connectionStringTemplate = "mongodb://%s:%s@%s"
+)
 
-type Config struct {
-	Host string
-	Db   string
-}
-
-type mongoClient struct {
-	client *mongo.Client
-	config Config
-}
-
-func Init() {
-	config := Config{Host: config.DB.Host, Db: config.DB.Name}
-	client := NewMongoClient(config)
-	err := client.Ping(context.TODO(), nil)
+// GetConnection Retrieves a client to the MongoDB
+func GetConnection() (*mongo.Client, context.Context, context.CancelFunc) {
+	client, err := mongo.NewClient(options.Client().ApplyURI(config.DB.Host))
 	if err != nil {
-		log.Panic(err)
+		log.Printf("Failed to create client: %v", err)
 	}
-	log.Println("Mongodb connected!! 🎉")
-}
 
-// newMongoClient initial mongo connection
-func NewMongoClient(c Config) MongoClient {
-	clientOptions := options.Client().ApplyURI(c.Host)
-	client, err := mongo.Connect(context.TODO(), clientOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), connectTimeout*time.Second)
+
+	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Failed to connect to cluster: %v", err)
 	}
 
-	// return client.Database(c.Db)
-	return &mongoClient{
-		client: client,
-		config: c,
+	// Force a connection to verify our connection string
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Printf("Failed to ping cluster: %v", err)
 	}
-}
 
-func (c *mongoClient) Ping(ctx context.Context, rp *readpref.ReadPref) error {
-	return c.client.Ping(ctx, nil)
-}
-
-func (c *mongoClient) Database() *mongo.Database {
-	return c.client.Database(c.config.Db)
+	fmt.Println("Connected to MongoDB!")
+	return client, ctx, cancel
 }
