@@ -1,6 +1,7 @@
 package signup
 
 import (
+	"log"
 	"net/http"
 	"rock-paper-scissor/app/users"
 
@@ -9,7 +10,10 @@ import (
 
 func SignUpWithUsernameAndPassword(ctx *gin.Context) {
 	var user users.User
-	ctx.BindJSON(&user)
+	err := ctx.BindJSON(&user)
+	if err != nil {
+		log.Fatal(err)
+	}
 	id, err := AddUserToDatabase(&user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"msg": err})

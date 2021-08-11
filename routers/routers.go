@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"rock-paper-scissor/app/challenge"
 	"rock-paper-scissor/app/signup"
 	"rock-paper-scissor/app/tests"
 	"rock-paper-scissor/config"
@@ -34,8 +35,8 @@ func GenerateRouter() *gin.Engine {
 		ctx.JSON(200, usersController.Save(ctx))
 	})
 
-	// router.POST("/challenge", challenge.Challenge)
-	// router.POST("/challenge", challenge.Challenge)
+	router.POST("/challenge", challenge.ChallengeToOppenent)
+
 	// router.GET("/ranking", func(ctx *gin.Context) {
 
 	// })

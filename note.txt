@@ -10,7 +10,7 @@ collection user {
             "enemyName": "enemy1",
             "player"
         },
-        "Challenger": ["name1", "name2"],
+        "Challenger": "name1",
         "status": "idle"
     }
 }
